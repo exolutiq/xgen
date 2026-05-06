@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEURONIC | Digital Healthcare Regulatory & AI Strategy</title>
+    <meta name="description" content="디지털 헬스케어 인허가와 AI 전략의 권위 있는 자문 브랜드, NEURONIC. 식약처 위원 및 SW 마에스트로의 전문성을 경험하세요.">
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- Lucide Icons (optional for better icons) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body class="dark-theme">
+    <div id="particle-container"></div>
+
+    <!-- Navigation -->
+    <nav class="glass-nav">
+        <div class="nav-container">
+            <a href="#hero" class="logo">
+                <span class="logo-text">NEURONIC</span>
+                <span class="logo-sub">AI & REGULATORY</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#hero">HOME</a></li>
+                <li><a href="#expertise">EXPERTISE</a></li>
+                <li><a href="#profile">MAESTRO</a></li>
+                <li><a href="#timeline">MAESTRO'S PATH</a></li>
+                <li><a href="#contact">CONSULTING</a></li>
+                <li><a href="board.html">Q&A BOARD</a></li>
+            </ul>
+            <div class="nav-cta">
+                <a href="#contact" class="btn btn-primary">자문 요청</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="hero" class="hero">
+        <div class="hero-content">
+            <div class="badge-container">
+                <span class="badge">식약처 위원 자문 브랜드</span>
+                <span class="badge">SW Maestro Network</span>
+            </div>
+            <h1>Digital Healthcare<br><span class="highlight">Innovation & Strategy</span></h1>
+            <p class="subtitle">디지털 헬스케어 인허가(RA), AI 모델링, 그리고 규제 혁신의 중심. <br>단순한 기술을 넘어 사회적 가치를 혁신하는 자문 서비스를 제공합니다.</p>
+            <div class="hero-btns">
+                <a href="#expertise" class="btn btn-outline">전문 분야 보기</a>
+                <a href="#timeline" class="btn btn-secondary">성장 로드맵</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="neural-visual">
+                <!-- Image will be displayed here via CSS or background -->
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse"></div>
+            <span>Scroll for details</span>
+        </div>
+    </header>
+
+    <!-- Authority Badges Section -->
+    <section class="authority-badges">
+        <div class="container">
+            <div class="badges-scroll">
+                <div class="badge-item">MFDS Commissioner</div>
+                <div class="badge-item">SW Maestro Alumni</div>
+                <div class="badge-item">AI Strategy Advisor</div>
+                <div class="badge-item">Regulatory Innovation</div>
+                <div class="badge-item">Digital Health Expert</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Expertise Matrix -->
+    <section id="expertise" class="expertise-matrix">
+        <div class="container">
+            <h2 class="section-title">Expertise <span class="highlight">Matrix</span></h2>
+            <div class="matrix-grid" id="expertise-grid">
+                <div style="text-align:center;width:100%;"><span class="highlight">Loading Expertise...</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Maestro Profile -->
+    <section id="profile" class="maestro-profile">
+        <div class="container">
+            <div class="profile-grid">
+                <div class="profile-visual animate-on-scroll">
+                    <div class="photo-frame">
+                        <img src="assets/images/real_ceo_improved.png" alt="Do-young Park, CEO">
+                    </div>
+                </div>
+                <div class="profile-text animate-on-scroll">
+                    <div class="badge-mini">Strategic Leader</div>
+                    <h2>The <span class="highlight">Maestro Background</span></h2>
+                    <p class="profile-intro"><strong>박도영 (Do-young Park), Ph.D.</strong> <br>디지털 인공지능 헬스케어 개발 및 품질 인허가
+                        전략가</p>
+
+                    <div class="info-blocks" id="background-grid">
+                        <div style="text-align:center;width:100%;"><span class="highlight">Loading Backgrounds...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Maestro’s Path (Interactive Timeline) -->
+    <section id="timeline" class="timeline-section">
+        <div class="container">
+            <h2 class="section-title">The <span class="highlight">Maestro’s Path</span></h2>
+            <div class="timeline-container" id="timeline-grid">
+                <div class="timeline-line"></div>
+                <!-- dynamically loaded -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Secure Inquiry Form -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="contact-card">
+                <div class="contact-info">
+                    <h2>Secure <span class="highlight">Consulting</span></h2>
+                    <p>귀사의 프로젝트와 과제를 말씀해 주세요. <br>전문적인 데이터 기반의 솔루션을 약속드립니다.</p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i data-lucide="mail"></i>
+                            <span>xgenicai@gmail.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i data-lucide="map-pin"></i>
+                            <span>Seoul, Republic of Korea</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="inquiry-form">
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label for="name">성함/기업명</label>
+                                <input type="text" id="name" placeholder="Name / Company" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="email">이메일</label>
+                                <input type="email" id="email" placeholder="Email" required>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="category">문의 유형</label>
+                            <select id="category">
+                                <option value="ra">인허가(RA) 전략 자문</option>
+                                <option value="ai">AI 모델링 및 기술 자문</option>
+                                <option value="biz">비즈니스 파트너십</option>
+                                <option value="etc">기타 문의</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="message">문의 내용</label>
+                            <textarea id="message" placeholder="프로젝트에 대해 설명해 주세요." rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary full-width">문의 제출하기</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Popup -->
+    <div id="expertise-modal" class="modal-backdrop">
+        <div class="modal-container">
+            <button class="modal-close" id="modal-close"><i data-lucide="x"></i></button>
+            <div class="modal-body" id="modal-content">
+                <!-- Content will be injected by JS -->
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 NEURONIC AI & REGULATORY. All Rights Reserved.</p>
+                <div class="social-links">
+                    <a href="#">LinkedIn</a>
+                    <a href="#">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts/data.js"></script>
+    <script src="scripts/main.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Form intercept
+            const form = document.getElementById('inquiry-form');
+            if (form) {
+                form.addEventListener('submit', (e) => {
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const category = document.getElementById('category').value;
+                    const message = document.getElementById('message').value;
+
+                    // Save inquiry to local storage
+                    window.AppData.addPost({ name, email, category, message });
+
+                    // Built-in main.js listener will handle default prevention and UI updates
+                });
+            }
+
+            try {
+                const data = window.AppData.getAll();
+
+                // Render Expertise
+                const expertiseGrid = document.getElementById('expertise-grid');
+                if (expertiseGrid && data.expertise) {
+                    expertiseGrid.innerHTML = data.expertise.map(exp => `
+                        <div class="matrix-card animate-on-scroll appear">
+                            <div class="card-icon"><i data-lucide="${exp.icon}"></i></div>
+                            <h3>${exp.title}</h3>
+                            <p>${exp.description}</p>
+                            <div class="card-detail-btn" data-expertise="${exp.ext_id}">자세히 보기 <i data-lucide="arrow-right"></i></div>
+                        </div>
+                    `).join('');
+                }
+
+                // Render Background
+                const bgBlocks = document.getElementById('background-grid');
+                if (bgBlocks && data.background) {
+                    bgBlocks.innerHTML = data.background.map(bg => `
+                        <div class="info-block">
+                            <div class="icon-small"><i data-lucide="${bg.icon}"></i></div>
+                            <div>
+                                <h4>${bg.title}</h4>
+                                <ul>${bg.content}</ul>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+
+                // Render Timeline
+                const timelineContainer = document.getElementById('timeline-grid');
+                if (timelineContainer && data.timeline) {
+                    let timelineHtml = '<div class="timeline-line"></div>';
+                    data.timeline.forEach((tl, index) => {
+                        const side = index % 2 === 0 ? 'left' : 'right';
+                        timelineHtml += `
+                            <div class="timeline-item ${side} animate-on-scroll appear">
+                                <div class="timeline-content">
+                                    <div class="year">${tl.year}</div>
+                                    <h3>${tl.title}</h3>
+                                    <p>${tl.description}</p>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    timelineContainer.innerHTML = timelineHtml;
+                }
+
+                lucide.createIcons();
+
+                // Modal setup using Event Delegation
+                window.expertiseModalData = {};
+                if (data.expertise) {
+                    data.expertise.forEach(exp => {
+                        window.expertiseModalData[exp.ext_id] = {
+                            title: exp.title,
+                            icon: exp.icon,
+                            sections: exp.modal_sections ? (typeof exp.modal_sections === 'string' ? JSON.parse(exp.modal_sections) : exp.modal_sections) : []
+                        };
+                    });
+                }
+            } catch (err) {
+                console.error("Failed to load dynamic data", err);
+            }
+        });
+
+        // Event Delegation for dynamic Data buttons
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('.card-detail-btn');
+            if (btn) {
+                const type = btn.getAttribute('data-expertise');
+                const modal = document.getElementById('expertise-modal');
+                const modalContent = document.getElementById('modal-content');
+
+                let eData = window.expertiseModalData && window.expertiseModalData[type]
+                    ? window.expertiseModalData[type]
+                    : null;
+
+                if (!eData) return;
+
+                let contentHtml = '<div class="modal-detail-type"><div class="icon-box"><i data-lucide="' + eData.icon + '"></i></div><h2>' + eData.title + '</h2></div>';
+                eData.sections.forEach(section => {
+                    contentHtml += '<div class="modal-section"><h4>' + section.header + '</h4><div class="modal-data-list">';
+                    if (section.items) {
+                        section.items.forEach(item => {
+                            contentHtml += '<div class="modal-data-item"><div class="item-meta">' + (item.meta || '') + '</div><div class="item-main">' + (item.main || '') + '</div><div class="item-sub">' + (item.sub || '') + '</div></div>';
+                        });
+                    }
+                    contentHtml += '</div></div>';
+                });
+
+                modalContent.innerHTML = contentHtml;
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                if (window.lucide) {
+                    window.lucide.createIcons();
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
