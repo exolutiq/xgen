@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEURONIC | Admin Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            padding: 40px;
+            background: #0d1117;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .admin-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 12px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #00ffc3;
+        }
+
+        .tab-btn {
+            background: #333;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .tab-btn.active {
+            background: #00ffc3;
+            color: #000;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .data-table th,
+        .data-table td {
+            border: 1px solid #444;
+            padding: 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .data-table th {
+            background: #222;
+        }
+
+        .action-btn {
+            background: #0088ff;
+            color: #fff;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+
+        .delete-btn {
+            background: #ff3366;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border-radius: 4px;
+            background: #222;
+            border: 1px solid #444;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #1a1a2e;
+            padding: 30px;
+            border-radius: 8px;
+            width: 600px;
+            max-width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .note {
+            color: #aaa;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+
+        .tools-bar {
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: right;
+        }
+    </style>
+    <script src="scripts/data.js"></script>
+</head>
+
+<body>
+    <div class="admin-container" id="login-section">
+        <h1>Admin Login</h1>
+        <p class="note">본 관리자용 패널은 브라우저 로컬 데이터(Local Storage)를 사용합니다.</p>
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" id="username" value="admin">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="password" value="admin123">
+        </div>
+        <button class="action-btn" onclick="login()" style="padding:10px 20px; font-size:16px;">Login</button>
+    </div>
+
+    <div class="admin-container hidden" id="dashboard-section">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h1>Dashboard</h1>
+            <button class="action-btn delete-btn" onclick="logout()">Logout</button>
+        </div>
+
+        <div class="tools-bar">
+            <button class="action-btn" style="background:#4CAF50;" onclick="exportData()">데이터 다운로드 (백업)</button>
+            <button class="action-btn delete-btn" onclick="resetData()">초기 데이터 복구</button>
+        </div>
+
+        <div style="margin-bottom:20px;">
+            <button class="tab-btn active" onclick="switchTab('expertise')">Expertise Matrix</button>
+            <button class="tab-btn" onclick="switchTab('background')">Background (Certificates)</button>
+            <button class="tab-btn" onclick="switchTab('timeline')">Timeline (Path)</button>
+            <button class="tab-btn" onclick="switchTab('board')">Q&A Board</button>
+        </div>
+
+        <div id="expertise" class="tab-content">
+            <h2>Expertise Matrix <button class="action-btn" onclick="openModal('expertise')">+ Add New</button></h2>
+            <table class="data-table" id="expertise-table">
+                <thead>
+                    <tr>
+                        <th width="30">ID</th>
+                        <th>Icon</th>
+                        <th>Title</th>
+                        <th width="120">Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div id="background" class="tab-content hidden">
+            <h2>Maestro Background <button class="action-btn" onclick="openModal('background')">+ Add New</button></h2>
+            <table class="data-table" id="background-table">
+                <thead>
+                    <tr>
+                        <th width="30">ID</th>
+                        <th>Icon</th>
+                        <th>Title</th>
+                        <th width="120">Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div id="timeline" class="tab-content hidden">
+            <h2>The Maestro's Path <button class="action-btn" onclick="openModal('timeline')">+ Add New</button></h2>
+            <table class="data-table" id="timeline-table">
+                <thead>
+                    <tr>
+                        <th width="30">ID</th>
+                        <th>Year</th>
+                        <th>Title</th>
+                        <th width="120">Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div id="board" class="tab-content hidden">
+            <h2>Q&A Board</h2>
+            <table class="data-table" id="board-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Message</th>
+                        <th>Reply</th>
+                        <th width="120">Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal hidden" id="crud-modal">
+        <div class="modal-content">
+            <h2 id="modal-title">Edit</h2>
+            <div id="modal-form-area"></div>
+            <div style="margin-top:20px;">
+                <button class="action-btn" onclick="saveData()">Save</button>
+                <button class="action-btn" style="background:#666" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentTab = 'expertise';
+        let currentDataType = '';
+        let currentEditId = null;
+        let allData = {};
+
+        function login() {
+            const u = document.getElementById('username').value;
+            const p = document.getElementById('password').value;
+            if (u === 'admin' && p === 'admin123') {
+                sessionStorage.setItem('admin_logged_in', 'true');
+                document.getElementById('login-section').classList.add('hidden');
+                document.getElementById('dashboard-section').classList.remove('hidden');
+                loadData();
+            } else {
+                alert('Invalid credentials');
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem('admin_logged_in');
+            location.reload();
+        }
+
+        function loadData() {
+            allData = AppData.getAll();
+            renderTables();
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(tab).classList.remove('hidden');
+            event.target.classList.add('active');
+            currentTab = tab;
+        }
+
+        function escapeHTML(str) {
+            if (!str) return '';
+            return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+
+        function renderTables() {
+            const expTbody = document.querySelector('#expertise-table tbody');
+            expTbody.innerHTML = (allData.expertise || []).map(row => `
+                <tr>
+                    <td>${row.id}</td><td>${escapeHTML(row.icon)}</td><td>${escapeHTML(row.title)}</td>
+                    <td>
+                        <button class="action-btn" onclick='editData("expertise", ${JSON.stringify(row).replace(/'/g, "&#39;")})'>Edit</button>
+                        <button class="action-btn delete-btn" onclick="deleteData('expertise', ${row.id})">Del</button>
+                    </td>
+                </tr>
+            `).join('');
+
+            const bgTbody = document.querySelector('#background-table tbody');
+            bgTbody.innerHTML = (allData.background || []).map(row => `
+                <tr>
+                    <td>${row.id}</td><td>${escapeHTML(row.icon)}</td><td>${escapeHTML(row.title)}</td>
+                    <td>
+                        <button class="action-btn" onclick='editData("background", ${JSON.stringify(row).replace(/'/g, "&#39;")})'>Edit</button>
+                        <button class="action-btn delete-btn" onclick="deleteData('background', ${row.id})">Del</button>
+                    </td>
+                </tr>
+            `).join('');
+
+            const tlTbody = document.querySelector('#timeline-table tbody');
+            tlTbody.innerHTML = (allData.timeline || []).map(row => `
+                <tr>
+                    <td>${row.id}</td><td>${escapeHTML(row.year)}</td><td>${escapeHTML(row.title)}</td>
+                    <td>
+                        <button class="action-btn" onclick='editData("timeline", ${JSON.stringify(row).replace(/'/g, "&#39;")})'>Edit</button>
+                        <button class="action-btn delete-btn" onclick="deleteData('timeline', ${row.id})">Del</button>
+                    </td>
+                </tr>
+            `).join('');
+
+            const bdTbody = document.querySelector('#board-table tbody');
+            bdTbody.innerHTML = (allData.board || []).map(row => `
+                <tr>
+                    <td>${escapeHTML(row.name)}</td><td>${escapeHTML(row.category)}</td>
+                    <td>${escapeHTML(row.message)}</td><td>${escapeHTML(row.reply) || 'No reply'}</td>
+                    <td>
+                        <button class="action-btn" onclick='editData("board", ${JSON.stringify(row).replace(/'/g, "&#39;")})'>Reply</button>
+                        <button class="action-btn delete-btn" onclick="deleteData('board', ${row.id})">Del</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function openModal(type, data = null) {
+            currentDataType = type;
+            currentEditId = data ? data.id : null;
+            document.getElementById('modal-title').innerText = data ? 'Edit ' + type : 'Add ' + type;
+
+            let formHtml = '';
+            if (type === 'expertise') {
+                formHtml = `
+                    <div class="form-group"><label>Icon (lucide name)</label><input type="text" id="f_icon" value="${data ? escapeHTML(data.icon) : ''}"></div>
+                    <div class="form-group"><label>Title</label><input type="text" id="f_title" value="${data ? escapeHTML(data.title) : ''}"></div>
+                    <div class="form-group"><label>Description</label><textarea id="f_description">${data ? escapeHTML(data.description) : ''}</textarea></div>
+                    <div class="form-group"><label>Ext ID (for detail popup)</label><input type="text" id="f_ext_id" value="${data ? escapeHTML(data.ext_id) : ''}"></div>
+                    <div class="form-group"><label>Modal Sections JSON</label><textarea id="f_modal_sections" rows="4">${data ? (typeof data.modal_sections === 'string' ? escapeHTML(data.modal_sections) : escapeHTML(JSON.stringify(data.modal_sections))) : '[]'}</textarea></div>
+                `;
+            } else if (type === 'background') {
+                formHtml = `
+                    <div class="form-group"><label>Icon</label><input type="text" id="f_icon" value="${data ? escapeHTML(data.icon) : ''}"></div>
+                    <div class="form-group"><label>Title (e.g., 교육 컨설팅 수료증)</label><input type="text" id="f_title" value="${data ? escapeHTML(data.title) : ''}"></div>
+                    <div class="form-group"><label>Content (HTML list form: &lt;li&gt;...&lt;/li&gt;)</label><textarea id="f_content" rows="4">${data ? escapeHTML(data.content) : ''}</textarea></div>
+                `;
+            } else if (type === 'timeline') {
+                formHtml = `
+                    <div class="form-group"><label>Year</label><input type="text" id="f_year" value="${data ? escapeHTML(data.year) : ''}"></div>
+                    <div class="form-group"><label>Title</label><input type="text" id="f_title" value="${data ? escapeHTML(data.title) : ''}"></div>
+                    <div class="form-group"><label>Description</label><textarea id="f_description">${data ? escapeHTML(data.description) : ''}</textarea></div>
+                `;
+            } else if (type === 'board') {
+                formHtml = `
+                    <div class="form-group"><label>Post Message</label><p style="background:#333;padding:10px;border-radius:4px;">${data ? escapeHTML(data.message) : ''}</p></div>
+                    <div class="form-group"><label>Reply</label><textarea id="f_reply" rows="4">${data ? (escapeHTML(data.reply) || '') : ''}</textarea></div>
+                `;
+            }
+            document.getElementById('modal-form-area').innerHTML = formHtml;
+            document.getElementById('crud-modal').classList.remove('hidden');
+        }
+
+        function editData(type, data) { openModal(type, typeof data === 'string' ? JSON.parse(data) : data); }
+        function closeModal() { document.getElementById('crud-modal').classList.add('hidden'); }
+
+        function saveData() {
+            let list = allData[currentDataType] || [];
+
+            if (currentEditId) {
+                // Update
+                let index = list.findIndex(r => r.id === currentEditId);
+                if (index > -1) {
+                    if (currentDataType === 'expertise') {
+                        list[index].icon = document.getElementById('f_icon').value;
+                        list[index].title = document.getElementById('f_title').value;
+                        list[index].description = document.getElementById('f_description').value;
+                        list[index].ext_id = document.getElementById('f_ext_id').value;
+                        list[index].modal_sections = JSON.parse(document.getElementById('f_modal_sections').value || '[]');
+                    } else if (currentDataType === 'background') {
+                        list[index].icon = document.getElementById('f_icon').value;
+                        list[index].title = document.getElementById('f_title').value;
+                        list[index].content = document.getElementById('f_content').value;
+                    } else if (currentDataType === 'timeline') {
+                        list[index].year = document.getElementById('f_year').value;
+                        list[index].title = document.getElementById('f_title').value;
+                        list[index].description = document.getElementById('f_description').value;
+                    } else if (currentDataType === 'board') {
+                        list[index].reply = document.getElementById('f_reply').value;
+                    }
+                }
+            } else {
+                // Insert
+                let newRow = { id: Date.now() };
+                if (currentDataType === 'expertise') {
+                    newRow.icon = document.getElementById('f_icon').value;
+                    newRow.title = document.getElementById('f_title').value;
+                    newRow.description = document.getElementById('f_description').value;
+                    newRow.ext_id = document.getElementById('f_ext_id').value;
+                    newRow.modal_sections = JSON.parse(document.getElementById('f_modal_sections').value || '[]');
+                } else if (currentDataType === 'background') {
+                    newRow.icon = document.getElementById('f_icon').value;
+                    newRow.title = document.getElementById('f_title').value;
+                    newRow.content = document.getElementById('f_content').value;
+                } else if (currentDataType === 'timeline') {
+                    newRow.year = document.getElementById('f_year').value;
+                    newRow.title = document.getElementById('f_title').value;
+                    newRow.description = document.getElementById('f_description').value;
+                }
+                list.push(newRow);
+            }
+
+            AppData.saveAll(allData);
+            closeModal();
+            loadData();
+        }
+
+        function deleteData(type, id) {
+            if (confirm('Delete this item?')) {
+                allData[type] = allData[type].filter(r => r.id !== id);
+                AppData.saveAll(allData);
+                loadData();
+            }
+        }
+
+        function exportData() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(allData, null, 2));
+            const dlAnchorElem = document.createElement('a');
+            dlAnchorElem.setAttribute("href", dataStr);
+            dlAnchorElem.setAttribute("download", "neuronic_backup.json");
+            dlAnchorElem.click();
+        }
+
+        function resetData() {
+            if (confirm("정말 모든 데이터를 초기 기본값 설정으로 되돌리시겠습니까?")) {
+                localStorage.removeItem('neuronic_data');
+                loadData();
+            }
+        }
+
+        if (sessionStorage.getItem('admin_logged_in') === 'true') {
+            document.getElementById('login-section').classList.add('hidden');
+            document.getElementById('dashboard-section').classList.remove('hidden');
+            loadData();
+        }
+    </script>
+</body>
+
+</html>
